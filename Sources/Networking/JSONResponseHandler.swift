@@ -16,8 +16,10 @@ public protocol ResponseHandler: Decodable {
     func handleResponse(data: Data) throws -> ResponseType
 }
 
-
 public class JSONResponseHandler<T: Decodable>: ResponseHandler {
+    
+    public typealias ResponseType = T
+
     public func handleResponse(data: Data) throws -> T {
         // Create JSON decoder
         let decoder = JSONDecoder()
