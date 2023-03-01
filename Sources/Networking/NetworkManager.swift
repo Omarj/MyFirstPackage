@@ -28,7 +28,21 @@
      case .success(let response):
          print("Received response: \(response)")
     
+ let endpointManager = EndpointManager()
 
+ endpointManager.addEndpoint(.login, path: "/login", method: .post, headers: ["Content-Type": "application/json"])
+
+ endpointManager.addEndpoint(.logout, path: "/logout", method: .get)
+
+ if let endpointInfo = endpointManager.endpointInfo(for: .login),
+     let url = endpointManager.url(for: .login, baseURL: baseURL) {
+     let requestBuilder = RequestBuilder(baseURL: baseURL)
+         .set(path: endpointInfo.path)
+         .set(method: endpointInfo.method)
+         .set(headers: endpointInfo.headers)
+         .set(parameters: endpointInfo.parameters)
+     // use the requestBuilder to make the request
+ }
  */
 
 import Foundation

@@ -36,6 +36,23 @@
 
  let fileURL = URL(fileURLWithPath: "path/to/file") networkRequest.sendUploadRequest(url: request.url!, responseHandler: jsonResponseHandler, fileURL: fileURL, completionHandler: { result in switch result { case .success(let response): print("Received response: \(response)") case .failure(let error): print("Error: \(error)") } })
 
+ 
+ let endpointManager = EndpointManager()
+
+ endpointManager.addEndpoint(.login, path: "/login", method: .post, headers: ["Content-Type": "application/json"])
+
+ endpointManager.addEndpoint(.logout, path: "/logout", method: .get)
+
+ if let endpointInfo = endpointManager.endpointInfo(for: .login),
+     let url = endpointManager.url(for: .login, baseURL: baseURL) {
+     let requestBuilder = RequestBuilder(baseURL: baseURL)
+         .set(path: endpointInfo.path)
+         .set(method: endpointInfo.method)
+         .set(headers: endpointInfo.headers)
+         .set(parameters: endpointInfo.parameters)
+     // use the requestBuilder to make the request
+ }
+
  */
 
 import Foundation
