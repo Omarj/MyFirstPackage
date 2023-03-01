@@ -37,10 +37,10 @@ public final class EndpointManager {
 }
 
 public struct EndpointInfo {
-    let path: String
-    let endPoint_method: HTTPMethod
-    let headers: HTTPHeaders?
-    let parameters: Parameters?
+    public let path: String
+    public let endPoint_method: HTTPMethod
+    public let headers: HTTPHeaders?
+    public let parameters: Parameters?
 }
 
 
