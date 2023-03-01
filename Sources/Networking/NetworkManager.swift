@@ -56,6 +56,32 @@ public final class NetworkManager {
         self.session = session
     }
     
+    public func sendRequest<T: Decodable, H: ResponseHandler>(request: URLRequest,
+                                                              responseType: T.Type,
+                                                              responseHandler: H,
+                                                              completionHandler: @escaping (Result<T, Error>) -> Void) {
+        session.request(request).validate().response { response in
+            switch response.result {
+            case .success(let data):
+                if let data = data {
+                    do {
+                        let decoded = try responseHandler.handleResponse(data: data) as! T
+                        completionHandler(.success(decoded))
+                    } catch let error as DecodingError {
+                        completionHandler(.failure(ResponseError(statusCode: 400, underlyingError: error)))
+                    } catch {
+                        completionHandler(.failure(ResponseError(statusCode: 400, underlyingError: error)))
+                    }
+                } else {
+                    completionHandler(.failure(ResponseError.emptyDataError))
+                }
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        }
+    }
+
+    
     public func sendRequest<T: Decodable, H: ResponseHandler>(url: URL,
                                                               method: HTTPMethod = .get,
                                                               headers: HTTPHeaders? = nil,
