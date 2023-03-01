@@ -18,8 +18,8 @@ public protocol ResponseHandler: Decodable {
 
 public class JSONResponseHandler<T: Decodable>: ResponseHandler {
     
-    public typealias ResponseType = T
-
+    public init() {}
+    
     public func handleResponse(data: Data) throws -> T {
         // Create JSON decoder
         let decoder = JSONDecoder()
