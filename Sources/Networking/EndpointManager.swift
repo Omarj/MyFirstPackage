@@ -20,7 +20,7 @@ public final class EndpointManager {
     public init() {}
     
     public func addEndpoint(_ endpoint: Endpoint, path: String, method: HTTPMethod, headers: HTTPHeaders? = nil, parameters: Parameters? = nil) {
-        endpoints[endpoint] = EndpointInfo(path: path, method: method, headers: headers, parameters: parameters)
+        endpoints[endpoint] = EndpointInfo(path: path, endPoint_method: method, headers: headers, parameters: parameters)
     }
     
     public func endpointInfo(for endpoint: Endpoint) -> EndpointInfo? {
@@ -38,7 +38,7 @@ public final class EndpointManager {
 
 public struct EndpointInfo {
     let path: String
-    let method: HTTPMethod
+    let endPoint_method: HTTPMethod
     let headers: HTTPHeaders?
     let parameters: Parameters?
 }
