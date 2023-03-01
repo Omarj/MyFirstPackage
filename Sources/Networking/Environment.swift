@@ -11,4 +11,5 @@ public enum Environment {
     case development
     case staging
     case production
+    case custom(name: String)
 }
